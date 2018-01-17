@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.lug.ustc.edu.cn/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="cs231n,deep learning," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="做完这门课的作业也蛮久了，但好像每次自己想的时候都回忆不起来，还是写下来有助于记忆，和便于下次再查看。学一个东西，还是得需要更深入的去理解它，如果只是程序填空或者跑别人的代码，那即使你现在看懂了，但实际上还是没有进入大脑。 代码 这里提供了下文中的代码。 Q1: k-Nearest Neighbor classifier (20 points)knn可以说是很基础的分类模型，想法很简单：当我们想要">
+<meta name="keywords" content="cs231n,deep learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs231n spring 2017 assignment1">
+<meta property="og:url" content="http://yoursite.com/2018/01/18/cs231n-spring-2017-assignment1/index.html">
+<meta property="og:site_name" content="Gregoryfh">
+<meta property="og:description" content="做完这门课的作业也蛮久了，但好像每次自己想的时候都回忆不起来，还是写下来有助于记忆，和便于下次再查看。学一个东西，还是得需要更深入的去理解它，如果只是程序填空或者跑别人的代码，那即使你现在看懂了，但实际上还是没有进入大脑。 代码 这里提供了下文中的代码。 Q1: k-Nearest Neighbor classifier (20 points)knn可以说是很基础的分类模型，想法很简单：当我们想要">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-17T17:28:29.763Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cs231n spring 2017 assignment1">
+<meta name="twitter:description" content="做完这门课的作业也蛮久了，但好像每次自己想的时候都回忆不起来，还是写下来有助于记忆，和便于下次再查看。学一个东西，还是得需要更深入的去理解它，如果只是程序填空或者跑别人的代码，那即使你现在看懂了，但实际上还是没有进入大脑。 代码 这里提供了下文中的代码。 Q1: k-Nearest Neighbor classifier (20 points)knn可以说是很基础的分类模型，想法很简单：当我们想要">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/18/cs231n-spring-2017-assignment1/"/>
+
+
+
+
+
+  <title>cs231n spring 2017 assignment1 | Gregoryfh</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gregoryfh</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/18/cs231n-spring-2017-assignment1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hao Feng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gregoryfh">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">cs231n spring 2017 assignment1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T00:00:01+08:00">
+                2018-01-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/study/" itemprop="url" rel="index">
+                    <span itemprop="name">study</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/18/cs231n-spring-2017-assignment1/" class="leancloud_visitors" data-flag-title="cs231n spring 2017 assignment1">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>做完这门课的作业也蛮久了，但好像每次自己想的时候都回忆不起来，还是写下来有助于记忆，和便于下次再查看。学一个东西，还是得需要更深入的去理解它，如果只是程序填空或者跑别人的代码，那即使你现在看懂了，但实际上还是没有进入大脑。</p>
+<p><a href="https://github.com/SunskyF/cs231n_spring_2017/tree/master/spring1617_assignment1/assignment1" target="_blank" rel="external">代码</a> 这里提供了下文中的代码。</p>
+<h2 id="Q1-k-Nearest-Neighbor-classifier-20-points"><a href="#Q1-k-Nearest-Neighbor-classifier-20-points" class="headerlink" title="Q1: k-Nearest Neighbor classifier (20 points)"></a>Q1: k-Nearest Neighbor classifier (20 points)</h2><p>knn可以说是很基础的分类模型，想法很简单：当我们想要给一张图片进行分类的时候，从我们的训练集中找到k张最接近的图片，然后根据它们进行投票，得出最后的分类结果。</p>
+<a id="more"></a>
+<p>我们需要完成的部分是：</p>
+<h3 id="compute-distance"><a href="#compute-distance" class="headerlink" title="compute_distance"></a>compute_distance</h3><p>比如说我们有Ntr个训练样本和Nte个测试样本，我们需要得到Nte * Ntr的矩阵，里面的每一行对应的是测试样本和所有训练样本的距离。</p>
+<h4 id="compute-distances-two-loops"><a href="#compute-distances-two-loops" class="headerlink" title="compute_distances_two_loops"></a>compute_distances_two_loops</h4><p>最朴素直接的想法，算一下两个样本之间的l2距离即可。</p>
+<h4 id="compute-distances-one-loop"><a href="#compute-distances-one-loop" class="headerlink" title="compute_distances_one_loop"></a>compute_distances_one_loop</h4><p>利用numpy的广播机制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dists[i, :] = np.linalg.norm(self.X_train - X[i], axis=1)</div></pre></td></tr></table></figure>
+<p>再针对对应的那个维度做一下norm即可，与上面的改变就是我们直接计算了一个测试样本到所有训练样本的距离。这也就是向量化操作，因为矩阵的操作远比显式的循环快。</p>
+<h4 id="compute-distances-no-loops"><a href="#compute-distances-no-loops" class="headerlink" title="compute_distances_no_loops"></a>compute_distances_no_loops</h4><p>这个就有点trick了。</p>
+<p>$(x - y)^2 = x^2 - 2xy + y^2$</p>
+<p>其实用的是这个很普通的公式。我们计算l2距离的时候，其实就是在算$(x-y)^2$，我们把这个式子展开，就可以避免compute_distances_one_loop中的循环。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xy = X.dot(self.X_train.T)    </div><div class="line">xx = np.sum(X ** 2, axis=1, keepdims=True)</div><div class="line">yy = np.sum(self.X_train ** 2, axis=1, keepdims=True).T</div><div class="line">dists = np.sqrt(-2 * xy + xx + yy)</div></pre></td></tr></table></figure>
+<p>经过测试，我们发现速度上的差异还是很明显的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Two loop version took 29.392334 seconds</div><div class="line">One loop version took 45.736492 seconds</div><div class="line">No loop version took 0.253548 seconds</div></pre></td></tr></table></figure>
+<h3 id="Cross-validation"><a href="#Cross-validation" class="headerlink" title="Cross-validation"></a>Cross-validation</h3><p>模型中往往有很多超参数，比如knn里的k。我们不能直接使用测试集来进行调参，因为这样我们其实是将测试集用成了训练集。所以我们往往会从训练集中分一部分出来用于评估模型，这部分叫做验证集（validation set）。</p>
+<p>而cv就更复杂一点，如果5-fold，我们将训练数据均分为5份，然后取4份训练，剩下1份作为验证集，然后换4份训练，最后平均一下。</p>
+<h2 id="Q2-Training-a-Support-Vector-Machine-25-points"><a href="#Q2-Training-a-Support-Vector-Machine-25-points" class="headerlink" title="Q2: Training a Support Vector Machine (25 points)"></a>Q2: Training a Support Vector Machine (25 points)</h2><p>支持向量机是一个很经典的算法，有着很强的数学基础，非常优雅。</p>
+<p><a href="http://cs231n.github.io/linear-classify/" target="_blank" rel="external">课程note</a>上提供了loss函数，$L<em>i = \sum \limits</em>{j\neq y<em>i} \max(0, w_j^T x_i - w</em>{y_i}^T x_i + \Delta)$</p>
+<p>我们对w求导</p>
+<script type="math/tex; mode=display">
+\frac{dL_i}{dw_j} =
+\left\{
+\begin{aligned}
+x_i, j \ne i \\
+-\sum \limits_{i \ne j} x_i , j =i
+\end{aligned}
+\right.</script><p>这里有我对svm的简单学习笔记<a href="/2018/01/18/svm-intro/" title="svm_intro">svm_intro</a>。</p>
+<p>我们将</p>
+<script type="math/tex; mode=display">
+\min \limits_{w, b}\frac{1}{2}{||\textbf{w}||}^2 + C\sum \limits_{i=1}^m l_{0/1}(y_i(w^Tx_i+b) - 1), C > 0</script><p>拿出来看，我们使用hingle loss替换01损失函数</p>
+<p>我们得到</p>
+<script type="math/tex; mode=display">
+\min \limits_{w, b}\frac{1}{2}{||\textbf{w}||}^2 + C\sum \limits_{i=1}^m\max(0, 1- y_i(w^Tx_i+b)), C > 0</script><p>我们回想一下Linear Regression的loss函数的样子</p>
+<script type="math/tex; mode=display">
+min \sum \limits_{i=1}^m(y_i - w^Tx_i)^2 + \frac{1}{2}{||\textbf{w}||}^2</script><p>前一项是loss，后一项是正则项，这不就和上面svm的式子很像嘛？将其扩展为多分类问题之后，就是课程所提供的loss函数了。</p>
+<h3 id="SVM-Classifier"><a href="#SVM-Classifier" class="headerlink" title="SVM Classifier"></a>SVM Classifier</h3><h4 id="svm-loss-naive"><a href="#svm-loss-naive" class="headerlink" title="svm_loss_naive"></a>svm_loss_naive</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(num_train):</div><div class="line">    scores = X[i].dot(W)</div><div class="line">    correct_class_score = scores[y[i]] <span class="comment"># s_&#123;y_i&#125;</span></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> xrange(num_classes):</div><div class="line">      <span class="keyword">if</span> j == y[i]:</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="comment"># s_&#123;j&#125; - s_&#123;y_i&#125; + delta</span></div><div class="line">      margin = scores[j] - correct_class_score + <span class="number">1</span> <span class="comment"># delta = 1</span></div><div class="line">      <span class="keyword">if</span> margin &gt; <span class="number">0</span>:</div><div class="line">        dW[:, j] += X[i]</div><div class="line">        dW[:, y[i]] -= X[i]</div><div class="line">        loss += margin</div></pre></td></tr></table></figure>
+<h4 id="svm-loss-vectorized"><a href="#svm-loss-vectorized" class="headerlink" title="svm_loss_vectorized"></a>svm_loss_vectorized</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">num_train = X.shape[<span class="number">0</span>]</div><div class="line">score = X.dot(W)</div><div class="line">correct_class_score = score[np.arange(num_train), y] <span class="comment"># 每一个样本的正确类别的得分</span></div><div class="line">margin = score - correct_class_score[..., <span class="keyword">None</span>] + <span class="number">1</span> <span class="comment"># s_&#123;j&#125; - s_&#123;y_i&#125; + delta</span></div><div class="line">margin[np.arange(num_train), y] = <span class="number">0</span> <span class="comment"># 正确的类别就置0，便于后续处理</span></div><div class="line">loss += np.sum(margin[margin &gt; <span class="number">0</span>]) <span class="comment"># max(0, ...)</span></div><div class="line">loss /= num_train</div><div class="line">loss += reg * np.sum(W * W)</div><div class="line"></div><div class="line">coe = np.zeros(margin.shape)</div><div class="line">coe[margin &gt; <span class="number">0</span>] = <span class="number">1</span> <span class="comment"># 是要计算grad的</span></div><div class="line">coe[np.arange(num_train), y] = <span class="number">0</span></div><div class="line">coe[np.arange(num_train), y] = -np.sum(coe, axis=<span class="number">1</span>) <span class="comment"># 系数</span></div><div class="line">dW = X.T.dot(coe) <span class="comment"># 直接求了累积</span></div><div class="line">dW /= num_train </div><div class="line">dW += <span class="number">2</span> * reg * W</div></pre></td></tr></table></figure>
+<h4 id="LinearClassifier-train"><a href="#LinearClassifier-train" class="headerlink" title="LinearClassifier.train"></a>LinearClassifier.train</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">batch_idx = np.random.choice(num_train, batch_size) <span class="comment"># 随机选择一个batch</span></div><div class="line">X_batch = X[batch_idx]</div><div class="line">y_batch = y[batch_idx]</div><div class="line"></div><div class="line">self.W -= learning_rate * grad <span class="comment"># 结合学习率更新参数</span></div></pre></td></tr></table></figure>
+<h4 id="LinearSVM-predict"><a href="#LinearSVM-predict" class="headerlink" title="LinearSVM.predict"></a>LinearSVM.predict</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">y_pred = np.argmax(X.dot(self.W), axis=<span class="number">1</span>) <span class="comment"># 选择输出得分最高的作为预测结果</span></div></pre></td></tr></table></figure>
+<h2 id="Q3-Implement-a-Softmax-classifier-20-points"><a href="#Q3-Implement-a-Softmax-classifier-20-points" class="headerlink" title="Q3: Implement a Softmax classifier (20 points)"></a>Q3: Implement a Softmax classifier (20 points)</h2><script type="math/tex; mode=display">
+softmax: f_j(z) = \frac{e^{z_j}}{\sum_k e^{z_k}}</script><p>对这个求导</p>
+<script type="math/tex; mode=display">
+\frac{df_j}{dz_i} = \left\{
+\begin{aligned}
+\frac{e^{z_j}(\sum_k e^{z_k} - e^{z_j})}{(\sum_k e^{z_k})^2} = f_j(z)(1-f_j(z)), j = i \\
+-\frac{e^{z_j}e^{z_i}}{(\sum_k e^{z_k})^2}  =- f_j(z)f_i(z), j \ne i
+\end{aligned}
+\right.</script><p>下面我们结合<em>cross-entropy loss</em></p>
+<script type="math/tex; mode=display">
+L_i = -log(\frac{e^{f_{y_i}}}{\sum_j e^{j}})</script><p>求导</p>
+<script type="math/tex; mode=display">
+\frac{dL_i}{dz_j} = \left\{
+\begin{aligned}
+-\frac{1}{f_i(z)}\frac{e^{z_j}(\sum_k e^{z_k} - e^{z_j})}{(\sum_k e^{z_k})^2} = f_j(z) - 1, j = i \\
+-\frac{1}{f_i(z)} * -\frac{e^{z_j}e^{z_i}}{(\sum_k e^{z_k})^2}  = f_j(z), j \ne i
+\end{aligned}
+\right.</script><h3 id="Softmax-Classifier"><a href="#Softmax-Classifier" class="headerlink" title="Softmax Classifier"></a>Softmax Classifier</h3><h4 id="softmax-loss-naive"><a href="#softmax-loss-naive" class="headerlink" title="softmax_loss_naive"></a>softmax_loss_naive</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(X.shape[<span class="number">0</span>]):</div><div class="line">    h = X[i].dot(W)</div><div class="line">    pred = np.exp(h - h.max()) / np.sum(np.exp(h - h.max()))</div><div class="line">    loss += -np.log(pred[y[i]]) + <span class="number">0.5</span> * reg * np.sum(W ** <span class="number">2</span>)</div><div class="line">    pred[y[i]] -= <span class="number">1</span></div><div class="line">    dW += X[i][..., <span class="keyword">None</span>].dot(pred[<span class="keyword">None</span>, ...]) + reg * W</div></pre></td></tr></table></figure>
+<h4 id="softmax-loss-vectorized"><a href="#softmax-loss-vectorized" class="headerlink" title="softmax_loss_vectorized"></a>softmax_loss_vectorized</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">h = X.dot(W)</div><div class="line">pred = np.exp(h - h.max(axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)) / np.sum(np.exp(h - h.max(axis=<span class="number">1</span>, 				keepdims=<span class="keyword">True</span>)), axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)</div><div class="line">loss += np.sum(-np.log(pred[np.arange(X.shape[<span class="number">0</span>]), y])) / X.shape[<span class="number">0</span>] + <span class="number">0.5</span> * reg * np.sum(W ** 		<span class="number">2</span>)</div><div class="line">pred[np.arange(X.shape[<span class="number">0</span>]), y] -= <span class="number">1</span></div><div class="line">dW += X.T.dot(pred) / X.shape[<span class="number">0</span>] + reg * W</div></pre></td></tr></table></figure>
+<h2 id="Q4-Two-Layer-Neural-Network-25-points"><a href="#Q4-Two-Layer-Neural-Network-25-points" class="headerlink" title="Q4: Two-Layer Neural Network (25 points)"></a>Q4: Two-Layer Neural Network (25 points)</h2><p>前向非常简单，直接叠加起来就行</p>
+<script type="math/tex; mode=display">
+h = relu(w_1^Tx + b_1) \\
+y = w_2^Th + b_2 \\
+z = softmax(y) \\
+loss = -log(z)</script><p>反向也很简单，我们在Q3中已经推导了$\frac{dL_i}{dz_j}$，也就是这里的$\frac{dloss}{dy}$。</p>
+<p>那么我们可以用链式法则</p>
+<script type="math/tex; mode=display">
+\frac{dloss}{dw_2} = \frac{dloss}{dy}\frac{dy}{dw_2} = h^T\frac{dloss}{dy} \\
+\frac{dloss}{db_2} = \frac{dloss}{dy}\frac{dy}{db_2} = \frac{dloss}{dy} \\
+\frac{dloss}{dw_1} = \frac{dloss}{dh}\frac{dh}{dw_1} = \frac{dloss}{dy} \frac{dy}{dh}\frac{dh}{dw_1}</script><p>然后按照推出来的公式写代码就好了，注意一下矩阵的维度就能理清$w$写在前面还是后面。</p>
+<h4 id="forward-pass"><a href="#forward-pass" class="headerlink" title="forward pass"></a>forward pass</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">h1 = X.dot(W1) + b1 <span class="comment"># w^Tx + b，第一层</span></div><div class="line">relu1 = np.maximum(<span class="number">0</span>, h1) <span class="comment"># max(0, x)，激活函数relu</span></div><div class="line">scores = relu1.dot(W2) + b2 <span class="comment"># w^Tx + b，第二层</span></div><div class="line"></div><div class="line">pred = np.exp(scores - scores.max(axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)) / np.sum(np.exp(scores - 					scores.max(axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>)), axis=<span class="number">1</span>, keepdims=<span class="keyword">True</span>) <span class="comment"># 同softmax</span></div><div class="line">loss = np.sum(-np.log(pred[np.arange(X.shape[<span class="number">0</span>]), y])) / X.shape[<span class="number">0</span>] + reg * (np.sum(W1 ** <span class="number">2</span>) + 			np.sum(W2 ** <span class="number">2</span>))</div></pre></td></tr></table></figure>
+<h4 id="backward-pass"><a href="#backward-pass" class="headerlink" title="backward pass"></a>backward pass</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">dscores = pred </div><div class="line">dscores[np.arange(X.shape[<span class="number">0</span>]), y] -= <span class="number">1</span> <span class="comment"># softmax的梯度</span></div><div class="line">grads[<span class="string">'W2'</span>] = relu1.T.dot(dscores) / X.shape[<span class="number">0</span>] + <span class="number">2</span> * reg * W2</div><div class="line">grads[<span class="string">'b2'</span>] = np.sum(dscores, axis=<span class="number">0</span>) / X.shape[<span class="number">0</span>]</div><div class="line">dh1 = dscores.dot(W2.T)</div><div class="line">dh1[h1 &lt; <span class="number">0</span>] = <span class="number">0</span></div><div class="line">grads[<span class="string">'W1'</span>] = X.T.dot(dh1) / X.shape[<span class="number">0</span>] + <span class="number">2</span> * reg * W1</div><div class="line">grads[<span class="string">'b1'</span>] = np.sum(dh1, axis=<span class="number">0</span>) / X.shape[<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<h4 id="tune-hyperparameters"><a href="#tune-hyperparameters" class="headerlink" title="tune hyperparameters"></a>tune hyperparameters</h4><p>loss曲线差不多以线性的方式递减，说明学习率设置的太小，loss经过一定次数的迭代，还没有收敛。</p>
+<p>训练集和验证集之间的准确度曲线差距不大，说明模型的容量不够大。我们对一个容量足够大的模型会希望它能够overfitting，也就是训练集和验证集之间会有比较大的差距。</p>
+<p>也就是在这里，我们可以调整的参数是隐藏层的大小、学习率、迭代册数、正则项参数。</p>
+<h2 id="Q5-Higher-Level-Representations-Image-Features-10-points"><a href="#Q5-Higher-Level-Representations-Image-Features-10-points" class="headerlink" title="Q5: Higher Level Representations: Image Features (10 points)"></a>Q5: Higher Level Representations: Image Features (10 points)</h2><p>主要就是想告诉我们，经过提取特征训练的分类器比使用原始数据训练的好。</p>
+<p>在python3下，可能运行有问题，主要是索引不能为float的锅。</p>
+<p>把feature.py中121行改为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">orientation_histogram[:,:,i] = uniform_filter(temp_mag, size=(cx, cy))[cx//<span class="number">2</span>::cx, cy//<span class="number">2</span>::cy].T</div></pre></td></tr></table></figure>
+<p>第二行加一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> division</div></pre></td></tr></table></figure>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>过了很久，终于把这个写好了，感觉自己对这些知识的推导更加清晰了。</p>
+<p>这也是我第一次认真的写博客，希望之后能够坚持吧。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/alipay.jpg" alt="Hao Feng 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cs231n/" rel="tag"># cs231n</a>
+          
+            <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/18/svm-intro/" rel="next" title="svm_intro">
+                <i class="fa fa-chevron-left"></i> svm_intro
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDkwNS83NDU0"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/avatar.jpg"
+              alt="Hao Feng" />
+          
+            <p class="site-author-name" itemprop="name">Hao Feng</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/SunskyF" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:fenghao9523@gmail.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Q1-k-Nearest-Neighbor-classifier-20-points"><span class="nav-number">1.</span> <span class="nav-text">Q1: k-Nearest Neighbor classifier (20 points)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compute-distance"><span class="nav-number">1.1.</span> <span class="nav-text">compute_distance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#compute-distances-two-loops"><span class="nav-number">1.1.1.</span> <span class="nav-text">compute_distances_two_loops</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compute-distances-one-loop"><span class="nav-number">1.1.2.</span> <span class="nav-text">compute_distances_one_loop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compute-distances-no-loops"><span class="nav-number">1.1.3.</span> <span class="nav-text">compute_distances_no_loops</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cross-validation"><span class="nav-number">1.2.</span> <span class="nav-text">Cross-validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q2-Training-a-Support-Vector-Machine-25-points"><span class="nav-number">2.</span> <span class="nav-text">Q2: Training a Support Vector Machine (25 points)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SVM-Classifier"><span class="nav-number">2.1.</span> <span class="nav-text">SVM Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss-naive"><span class="nav-number">2.1.1.</span> <span class="nav-text">svm_loss_naive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss-vectorized"><span class="nav-number">2.1.2.</span> <span class="nav-text">svm_loss_vectorized</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinearClassifier-train"><span class="nav-number">2.1.3.</span> <span class="nav-text">LinearClassifier.train</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LinearSVM-predict"><span class="nav-number">2.1.4.</span> <span class="nav-text">LinearSVM.predict</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q3-Implement-a-Softmax-classifier-20-points"><span class="nav-number">3.</span> <span class="nav-text">Q3: Implement a Softmax classifier (20 points)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Softmax-Classifier"><span class="nav-number">3.1.</span> <span class="nav-text">Softmax Classifier</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax-loss-naive"><span class="nav-number">3.1.1.</span> <span class="nav-text">softmax_loss_naive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax-loss-vectorized"><span class="nav-number">3.1.2.</span> <span class="nav-text">softmax_loss_vectorized</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q4-Two-Layer-Neural-Network-25-points"><span class="nav-number">4.</span> <span class="nav-text">Q4: Two-Layer Neural Network (25 points)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#forward-pass"><span class="nav-number">4.0.1.</span> <span class="nav-text">forward pass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backward-pass"><span class="nav-number">4.0.2.</span> <span class="nav-text">backward pass</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tune-hyperparameters"><span class="nav-number">4.0.3.</span> <span class="nav-text">tune hyperparameters</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Q5-Higher-Level-Representations-Image-Features-10-points"><span class="nav-number">5.</span> <span class="nav-text">Q5: Higher Level Representations: Image Features (10 points)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hao Feng</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+
+
+        
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=63670721";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("3bxjGhLcHbSW3hT7lSq9pBMR-gzGzoHsz", "vPJW9AHwc9OXFmh6nJFx4yGh");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

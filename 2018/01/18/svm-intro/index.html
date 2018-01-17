@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="fh" />
+  <meta name="keywords" content="machine learning," />
 
 
 
@@ -95,13 +95,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Gregoryfh">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="为了简便，我们从二分类问题开始。 损失函数">
+<meta name="keywords" content="machine learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svm_intro">
+<meta property="og:url" content="http://yoursite.com/2018/01/18/svm-intro/index.html">
 <meta property="og:site_name" content="Gregoryfh">
+<meta property="og:description" content="为了简便，我们从二分类问题开始。 损失函数">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/01/18/svm-intro/399159-20161015215846703-1219368032.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/18/svm-intro/soft_margin.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/18/svm-intro/slack_var.png">
+<meta property="og:updated_time" content="2018-01-17T17:23:22.686Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gregoryfh">
+<meta name="twitter:title" content="svm_intro">
+<meta name="twitter:description" content="为了简便，我们从二分类问题开始。 损失函数">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/18/svm-intro/399159-20161015215846703-1219368032.png">
 
 
 
@@ -131,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/18/svm-intro/"/>
 
 
 
 
 
-  <title>Gregoryfh</title>
+  <title>svm_intro | Gregoryfh</title>
   
 
 
@@ -156,8 +165,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -260,168 +268,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/18/cs231n-spring-2017-assignment1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hao Feng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gregoryfh">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/18/cs231n-spring-2017-assignment1/" itemprop="url">cs231n spring 2017 assignment1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-18T00:00:01+08:00">
-                2018-01-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/study/" itemprop="url" rel="index">
-                    <span itemprop="name">study</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/01/18/cs231n-spring-2017-assignment1/" class="leancloud_visitors" data-flag-title="cs231n spring 2017 assignment1">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>做完这门课的作业也蛮久了，但好像每次自己想的时候都回忆不起来，还是写下来有助于记忆，和便于下次再查看。学一个东西，还是得需要更深入的去理解它，如果只是程序填空或者跑别人的代码，那即使你现在看懂了，但实际上还是没有进入大脑。</p>
-<p><a href="https://github.com/SunskyF/cs231n_spring_2017/tree/master/spring1617_assignment1/assignment1" target="_blank" rel="external">代码</a> 这里提供了下文中的代码。</p>
-<h2 id="Q1-k-Nearest-Neighbor-classifier-20-points"><a href="#Q1-k-Nearest-Neighbor-classifier-20-points" class="headerlink" title="Q1: k-Nearest Neighbor classifier (20 points)"></a>Q1: k-Nearest Neighbor classifier (20 points)</h2><p>knn可以说是很基础的分类模型，想法很简单：当我们想要给一张图片进行分类的时候，从我们的训练集中找到k张最接近的图片，然后根据它们进行投票，得出最后的分类结果。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/18/cs231n-spring-2017-assignment1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -451,9 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/18/svm-intro/" itemprop="url">svm_intro</a></h1>
+          <h1 class="post-title" itemprop="name headline">svm_intro</h1>
         
 
         <div class="post-meta">
@@ -536,17 +383,102 @@
       
 
       
-        
-          <p>为了简便，我们从二分类问题开始。</p>
+        <p>为了简便，我们从二分类问题开始。</p>
 <h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p><img src="/2018/01/18/svm-intro/399159-20161015215846703-1219368032.png" alt="svm-plane"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/01/18/svm-intro/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
+<p>为了将绿色方块的点和红色圆圈的点分开，我们需要找到超平面（在二维空间中是线，三维是平面）。在上图中，直觉告诉我们，$B_1$的线更加好，因为它对训练样本局部扰动的“容忍”性最好。</p>
+<p>我们可以用以下的线性方程组描述$B_1$：</p>
+<script type="math/tex; mode=display">
+\textbf{w}^T\textbf{x} + b = 0</script><p>其中$\textbf{w}$就是该超平面的法向量，关于这点，我们可以任取在该超平面上的两个点$x_1, x_2$，减一下得到$\textbf{w}^T(x_1 - x_2) = 0$，那么对于$x_1, x_2$所决定的直线，$w$都与它垂直，所以它就是法向量。</p>
+<p>那么任意点到超平面的距离也就可以写成：</p>
+<script type="math/tex; mode=display">
+r = \frac{|\textbf{w}^T\textbf{x} + b|}{||\textbf{w}||}</script><p>关于这点，我们可以这么想，任取$B_1​$上任意一点$\textbf{x’}​$（过渡的中间变量），那么对于任意一点$\textbf{x}​$到超平面的距离为$x-x’​$在法向量$w​$上的投影长度：</p>
+<script type="math/tex; mode=display">
+r = \frac{|\textbf{w}^T(\textbf{x} -\textbf{x'})|}{||\textbf{w}||} = \frac{|\textbf{w}^T\textbf{x} + b|}{||\textbf{w}||}</script><p>那么对于一个分类器$y= \textbf{w}^T\textbf{x} + b$，对一个样本$x_i$我们可以令：</p>
+<script type="math/tex; mode=display">
+\left\{
+\begin{aligned}
+\textbf{w}^T\textbf{x} + b \ge +1, y_i = +1 \\
+\textbf{w}^T\textbf{x} + b \le -1, y_i = -1
+\end{aligned}
+\right.</script><p>我们可以通过成倍的改变$w, b​$来改变不等式右边的值，这里固定为1便于后面计算。</p>
+<p>那几个让等号成立的点被称为支持向量，也就是图中的$b<em>{11}$和$b</em>{12}$，</p>
+<p>那么：</p>
+<script type="math/tex; mode=display">
+margin \ \gamma = \frac{2}{||\textbf{w}||}</script><p>svm就是想要找到最大margin的超平面，现在我们可以用数学语言来描述这个需求：</p>
+<script type="math/tex; mode=display">
+\max \limits_{w, b}\frac{2}{||\textbf{w}||} \\
+s.t. y_i(\textbf{w}^T\textbf{x} + b) \ge 1, i=1,2,...,m.</script><p>$y_i​$用于消除正负的影响。</p>
+<p>上面的式子又等价于（为了简便）：</p>
+<script type="math/tex; mode=display">
+\min \limits_{w, b}\frac{1}{2}{||\textbf{w}||}^2 \\
+s.t. y_i(\textbf{w}^T\textbf{x} + b) \ge 1, i=1,2,...,m.</script><p>现在，我们有了SVM的数学描述，下面就是如何求解了。</p>
+<h2 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h2><p>其实这就是一个凸二次优化问题，有现成的库可以直接求解，但是我们还有更优雅的数学上的解法。</p>
+<p>”拉格朗日乘子法是一种经典的求解条件极值的解析方法，可将所有约束的优化模型问题转化为无约束极值问题的求解。“我们使用拉格朗日乘子法将上述问题转化为它的”对偶问题“，便于解决。</p>
+<p>我们首先添加拉格朗日乘子$\alpha_i \ge 0$，从而得到：</p>
+<script type="math/tex; mode=display">
+L(w, b, \alpha) = \frac{1}{2}{||\textbf{w}||}^2 + \sum \limits_{i=1}^m\alpha_i(1-y_i(w^Tx_i+b))</script><p>令</p>
+<script type="math/tex; mode=display">
+\theta(w) = \max_{\alpha_i\geq 0}\mathcal{L}(w,b,\alpha)</script><p>当所有的$y_i(\textbf{w}^T\textbf{x} + b) \ge 1$时，$\theta(w) $显然取到最大值$\frac{1}{2}{||\textbf{w}||}^2$，否则$\theta(w) $能够取到$\infty$。所以当满足所有约束条件时，最小化$\theta(w)$就是最小化$\frac{1}{2}{||\textbf{w}||}^2$。</p>
+<p>也就是：</p>
+<script type="math/tex; mode=display">
+\min_{w,b}\;\theta(w) = \min_{w,b}\; \max_{\alpha_i\geq 0}\; \mathcal{L}(w,b,\alpha) = p^*</script><p>这里我们是先对$\alpha$求最大值，之后再对$w, b$求最小值。</p>
+<p>下面我们先对$w, b​$求最小，再对$\alpha​$求最大。</p>
+<p>即：</p>
+<script type="math/tex; mode=display">
+\max_{\alpha_i\geq 0}\; \min_{w,b}\; \mathcal{L}(w,b,\alpha) = d^*</script><p>因为最大值中的最小值肯定大于等于最小值中的最大值，所以<script type="math/tex">p^* \ge d^*</script></p>
+<p>当满足KKT条件时，<script type="math/tex">p^* = d^*</script>。</p>
+<p>此处，kkt条件应为</p>
+<script type="math/tex; mode=display">
+\alpha \ge 0 \\
+
+ y_i(\textbf{w}^T\textbf{x} + b) - 1\ge 0 \\
+
+ \alpha_i(y_i(w^Tx_i+b) - 1) = 0</script><p>关于这点请参考<a href="https://www.zhihu.com/question/23311674。" target="_blank" rel="external">https://www.zhihu.com/question/23311674。</a></p>
+<p>简单的说，在极值点$x^*$，目标函数增大的方向应该被排除在外。</p>
+<p>因为先对$w, b$求最小，那么先令w和b的偏导等于0：</p>
+<script type="math/tex; mode=display">
+w = \sum \limits_{i=1}^m\alpha_iy_ix_i \\
+
+\sum \limits_{i=1}^m\alpha_iy_i = 0</script><p>将w和b代入原式：</p>
+<script type="math/tex; mode=display">
+L(w,b,a) = \sum \limits_{i=1}^n\alpha_i- \frac{1}{2}\sum \limits_{i=1}^m\alpha_i\alpha_jy_iy_jx^T_ix_j</script><p>经过如上的转化，我们把问题转化为了：</p>
+<script type="math/tex; mode=display">
+\max \limits{a} \sum \limits{i=1}^n\alpha_i- \frac{1}{2}\sum \limits_{i=1}^m\alpha_i\alpha_jy_iy_jx^T_ix_j \\
+
+s.t. a_i \ge 0, i=1, ..., n \\
+
+\sum \limits_{i=1}^m\alpha_iy_i = 0</script><h2 id="SMO"><a href="#SMO" class="headerlink" title="SMO"></a>SMO</h2><p>为了求出$\alpha$，我们会使用SMO算法。</p>
+<p>针对$\sum \limits_{i=1}^m\alpha_iy_i = 0$此式，我们假设$\alpha_1和\alpha_2$是变量，其他的$\alpha$是常量。那么</p>
+<script type="math/tex; mode=display">
+\alpha_2 = \frac{1}{y_2}\left(\sum_{i=3}^n\alpha_iy_i-\alpha_1y_1\right) \triangleq y_2\left(K-\alpha_1y_1\right)</script><p>将$\alpha_2$带回原目标函数中，就可以消去$\alpha_2$，那么整个目标函数就是一个关于$\alpha_1$的一元二次函数。同时因为$\alpha_1和\alpha_2$都有范围，所以可以得到$\alpha_1$的一个取值范围，在这个范围内，我们可以很快的对二次函数求最大值，即完成一次迭代。</p>
+<h2 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h2><p>我们之前讨论的默认条件是数据是线性可分的。我们在样本空间中找到一个超平面将其完全分割开来，这个超平面是最大化margin来确定的。但是很多情况下，数据不是线性可分的，会有一些outlier，如果我们将这些outlier也算进去，那我们获得的超平面会有很大程度上的过拟合。</p>
+<p><img src="/2018/01/18/svm-intro/soft_margin.png" alt="soft_margin"></p>
+<p>我们原来对所有的样本都要求</p>
+<script type="math/tex; mode=display">
+y_i(w^Tx_i+b)\geq 1</script><p>现在我们允许一些样本不满足上述约束，当然，这样的样本应该尽量的少。</p>
+<p>我们改写原来的优化目标：</p>
+<script type="math/tex; mode=display">
+\min \limits_{w, b}\frac{1}{2}{||\textbf{w}||}^2 + C\sum \limits_{i=1}^m l_{0/1}(y_i(w^Tx_i+b) - 1), C > 0</script><p>这里的$C$用来控制第一项寻找margin最大的超平面和第二项保证数据量偏差最小之间的权重。上式中的<script type="math/tex">l_{01}</script> 是一个01损失函数，我们一般使用hinge loss来替换它：</p>
+<script type="math/tex; mode=display">
+l_{hinge}(z) = max(0, 1-z)</script><p><img src="/2018/01/18/svm-intro/slack_var.png" alt="slack_var"></p>
+<p>原本的分类平面是红色的线，对应的分别是蓝色和粉色的线。但是考虑到黑圈圈起来的蓝点，原来的超平面就偏移到黑色虚线那里了。</p>
+<p>现在我们引入松弛变量$\xi_i\geq 0$ ，对应上图黑色线段，据此将约束条件改为</p>
+<script type="math/tex; mode=display">
+y_i(w^Tx_i+b)\geq 1 - \xi_i</script><p>再重写上式</p>
+<script type="math/tex; mode=display">
+\min \limits_{w, b}\frac{1}{2}{||\textbf{w}||}^2 + C\sum \limits_{i=1}^m \xi_i</script><p>接下来同上面的拉格朗日乘子法，我们可以解得</p>
+<script type="math/tex; mode=display">
+\begin{align} 
+\max_\alpha &\sum_{i=1}^m\alpha_i – \frac{1}{2}\sum_{i,j=1}^m\alpha_i\alpha_jy_iy_j\langle x_i,x_j\rangle \\ 
+s.t., &0\leq \alpha_i\leq C, i=1,\ldots,m \\ 
+&\sum_{i=1}^m\alpha_iy_i = 0 
+\end{align}</script><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://www.cnblogs.com/en-heng/p/5965438.html" target="_blank" rel="external">https://www.cnblogs.com/en-heng/p/5965438.html</a></p>
+<p>《机器学习》 周志华</p>
+<p><a href="http://blog.pluskid.org/（kid神真的写的好啊）" target="_blank" rel="external">http://blog.pluskid.org/（kid神真的写的好啊）</a></p>
+<p><a href="https://www.cnblogs.com/90zeng/p/Lagrange_duality.html" target="_blank" rel="external">https://www.cnblogs.com/90zeng/p/Lagrange_duality.html</a></p>
+<p><a href="https://www.cnblogs.com/jerrylead/archive/2011/03/18/1988419.html(SMO，写的非常详细" target="_blank" rel="external">https://www.cnblogs.com/jerrylead/archive/2011/03/18/1988419.html(SMO，写的非常详细</a>)</p>
+
       
     </div>
     
@@ -556,19 +488,65 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/img/alipay.jpg" alt="Hao Feng 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag"># machine learning</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/cs231n-spring-2017-assignment1/" rel="prev" title="cs231n spring 2017 assignment1">
+                cs231n spring 2017 assignment1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -578,10 +556,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -589,6 +568,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDkwNS83NDU0"></div>
+    
+  </div>
+
 
         </div>
         
@@ -609,8 +594,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -695,6 +689,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-number">1.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉格朗日乘子法"><span class="nav-number">2.</span> <span class="nav-text">拉格朗日乘子法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO"><span class="nav-number">3.</span> <span class="nav-text">SMO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔"><span class="nav-number">4.</span> <span class="nav-text">软间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">4.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -831,6 +841,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
@@ -859,6 +873,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
