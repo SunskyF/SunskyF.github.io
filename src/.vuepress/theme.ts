@@ -1,5 +1,7 @@
 import { hopeTheme } from "vuepress-theme-hope";
 import navbar from "./navbar.js";
+import { defineClientConfig } from "@vuepress/client";
+import { defineNavbarConfig } from "vuepress-theme-hope";
 // import sidebar from "./sidebar.js";
 
 // const MR_HOPE_AVATAR =
@@ -28,6 +30,12 @@ export default hopeTheme({
 
   // navbar
   navbar,
+
+  navbarLayout: {
+    start: [],
+    center: ["Links"],
+    end: ["Search",],
+  },
 
   // sidebar
   sidebar: false,
@@ -96,7 +104,9 @@ export default hopeTheme({
 
   plugins: {
     blog: true,
-    
+
+    autoCatalog: true,
+
     comment: {
       // You should generate and use your own comment service
       provider: "Waline",
@@ -114,15 +124,15 @@ export default hopeTheme({
       figure: true,
       flowchart: true,
       gfm: true,
-      imgLazyload: true,
+      imgLazyload: false,
       imgSize: true,
       include: true,
       katex: true,
       mark: true,
       mermaid: true,
-      playground: {
-        presets: ["ts", "vue"],
-      },
+      // playground: {
+      //   presets: ["ts", "vue"],
+      // },
       presentation: ["highlight", "math", "search", "notes", "zoom"],
       stylize: [
         {

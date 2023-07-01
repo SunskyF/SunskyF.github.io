@@ -1,6 +1,7 @@
 ---
 icon: circle-info
 layout: Slide
+index: false
 article: false
 timeline: false
 ---
