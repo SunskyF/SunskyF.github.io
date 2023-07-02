@@ -91,6 +91,8 @@ export default hopeTheme({
 
   backToTop: true,
   
+  editLink: false,
+
   // encrypt: {
   //   config: {
   //     "/demo/encrypt.html": ["1234"],
@@ -124,7 +126,7 @@ export default hopeTheme({
       figure: true,
       flowchart: true,
       gfm: true,
-      imgLazyload: false,
+      imgLazyload: true,
       imgSize: true,
       include: true,
       katex: true,
